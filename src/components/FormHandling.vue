@@ -47,7 +47,6 @@ const handleSubmit = () => {
 </script>
 
 <style scoped>
-/* Tambahan style opsional */
 input {
   padding: 6px;
   margin-top: 4px;
