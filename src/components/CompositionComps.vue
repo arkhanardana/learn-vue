@@ -1,5 +1,3 @@
-<!-- This is composition API -->
-
 <script>
 export default {
   data() {

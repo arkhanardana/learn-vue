@@ -1,5 +1,3 @@
-<!-- This is Options API -->
-
 <script setup>
 const name = 'Arkhan Ardana'
 
