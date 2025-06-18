@@ -23,6 +23,30 @@
       </button>
     </form>
 
+    <select
+      name="fruit"
+      id="fruit"
+      v-model="selectData"
+      class="border-1 border-amber-500"
+      placeholder="Pilih"
+    >
+      <option value="">Pilih buah</option>
+      <option value="mangga">Mangga</option>
+      <option value="pisang">Pisang</option>
+      <option value="semangka">Semangka</option>
+    </select>
+
+    <p>Hasil nya yang di select: {{ selectData }}</p>
+
+    <div class="block">
+      <p>Click untuk buka modal</p>
+      <button @click="handleOpenModal">Open Modal</button>
+    </div>
+
+    <div v-if="isOpenModal">
+      <p>Ini adalah modal yang muncul</p>
+    </div>
+
     <div v-if="submittedDisplay">
       <h3>Data yang Dikirim:</h3>
       <p><strong>Nama:</strong> {{ submittedData.name }}</p>
@@ -41,41 +65,52 @@ const formData = reactive({
   address: '',
 })
 
+const selectData = ref('')
+
 const submittedData = reactive({
   name: '',
   email: '',
   address: '',
 })
 
-const submitting = ref(false) // Use for disabling the button during submission
-const submittedDisplay = ref(false) // Use for controlling the display of submitted data
+const submitting = ref(false)
+const submittedDisplay = ref(false)
+const isOpenModal = ref(false)
 
 const handleSubmit = () => {
-  submitting.value = true // Disable the button
-  submittedDisplay.value = false // Hide previous submitted data before new submission
+  submitting.value = true
+  submittedDisplay.value = false
 
   setTimeout(() => {
     submittedData.name = formData.name
     submittedData.email = formData.email
     submittedData.address = formData.address
 
-    submitting.value = false // Re-enable the button
-    submittedDisplay.value = true // Show the submitted data
+    submitting.value = false
+    submittedDisplay.value = true
 
-    // Clear the form fields after submission is complete and data is displayed
     formData.email = ''
     formData.name = ''
     formData.address = ''
   }, 2000)
 }
+
+const handleOpenModal = () => {
+  isOpenModal.value = !isOpenModal.value
+}
 </script>
 
 <style scoped>
 input {
-  padding: 6px;
-  margin-top: 4px;
-  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
   display: block;
+}
+input:focus {
+  color: white;
+  border-color: #45a049;
 }
 
 button {

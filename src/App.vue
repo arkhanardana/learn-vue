@@ -6,6 +6,19 @@ import FormHandling from './components/FormHandling.vue'
 const count = ref(0)
 const max = 10
 
+const defaultCountries = ['jogja', 'jkt', 'solo']
+const countries = ref({
+  array: [...defaultCountries],
+  obj: {
+    count: 0,
+  },
+})
+
+const resetCountries = () => {
+  countries.value.array = [...defaultCountries]
+  countries.value.obj.count = 0
+}
+
 function increment() {
   if (count.value < max) {
     count.value++
@@ -18,6 +31,10 @@ function decrement() {
 
 function reset() {
   count.value = 0
+}
+
+const handleDeepReactivity = () => {
+  countries.value.array.push('sby'), countries.value.obj.count++
 }
 
 const name = `<span class="text-yellow-400">Arkhan Ardana</span>`
@@ -105,6 +122,13 @@ const buah = ['mangga']
 
       <!-- FORM HANDLING WITH VUE -->
       <FormHandling />
+
+      <!-- DEEP REACTIVITY -->
+      <button @click="handleDeepReactivity">Mutate</button>
+      <button @click="resetCountries">Reset</button>
+
+      <p>{{ countries.array }}</p>
+      <p>{{ countries.obj }}</p>
     </div>
   </header>
 </template>
