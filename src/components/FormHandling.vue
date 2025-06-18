@@ -10,13 +10,24 @@
       <input type="email" id="email" v-model="formData.email" required />
       <br /><br />
 
-      <button type="submit">Kirim</button>
+      <label for="address">Address:</label>
+      <input type="text" id="address" v-model="formData.address" required />
+      <br /><br />
+
+      <button
+        type="submit"
+        :disabled="submitting"
+        class="disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Kirim
+      </button>
     </form>
 
-    <div v-if="submitted">
+    <div v-if="submittedDisplay">
       <h3>Data yang Dikirim:</h3>
       <p><strong>Nama:</strong> {{ submittedData.name }}</p>
       <p><strong>Email:</strong> {{ submittedData.email }}</p>
+      <p><strong>Address:</strong> {{ submittedData.address }}</p>
     </div>
   </div>
 </template>
@@ -27,22 +38,35 @@ import { reactive, ref } from 'vue'
 const formData = reactive({
   name: '',
   email: '',
+  address: '',
 })
 
 const submittedData = reactive({
   name: '',
   email: '',
+  address: '',
 })
 
-const submitted = ref(false)
+const submitting = ref(false) // Use for disabling the button during submission
+const submittedDisplay = ref(false) // Use for controlling the display of submitted data
 
 const handleSubmit = () => {
-  submittedData.name = formData.name
-  submittedData.email = formData.email
-  submitted.value = true
+  submitting.value = true // Disable the button
+  submittedDisplay.value = false // Hide previous submitted data before new submission
 
-  formData.email = ''
-  formData.name = ''
+  setTimeout(() => {
+    submittedData.name = formData.name
+    submittedData.email = formData.email
+    submittedData.address = formData.address
+
+    submitting.value = false // Re-enable the button
+    submittedDisplay.value = true // Show the submitted data
+
+    // Clear the form fields after submission is complete and data is displayed
+    formData.email = ''
+    formData.name = ''
+    formData.address = ''
+  }, 2000)
 }
 </script>
 
